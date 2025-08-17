@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental: Diseño de Interfaces (GUI) - Punk Style</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Bungee:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 25%, #2d0a2d 50%, #1a1a1a 75%, #000000 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 0, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Creepster', cursive;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 10px #ff00ff,
+                0 0 20px #ff00ff,
+                0 0 30px #ff00ff,
+                3px 3px 0px #000000;
+            color: #ffffff;
+            transform: skew(-5deg);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 
+                    0 0 10px #ff00ff,
+                    0 0 20px #ff00ff,
+                    0 0 30px #ff00ff,
+                    3px 3px 0px #000000;
+            }
+            to {
+                text-shadow: 
+                    0 0 20px #ff00ff,
+                    0 0 30px #ff00ff,
+                    0 0 40px #ff00ff,
+                    3px 3px 0px #000000;
+            }
+        }
+
+        header p {
+            font-size: 1.4rem;
+            color: #00ffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            transform: skew(3deg);
+        }
+
+        .mind-map {
+            position: relative;
+            width: 100%;
+            height: 1000px;
+            margin: 0 auto;
+            background: 
+                linear-gradient(45deg, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                linear-gradient(-45deg, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            border: 3px solid #ff00ff;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 20px #ff00ff,
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mind-map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(255, 0, 255, 0.05) 100px
+                );
+            pointer-events: none;
+        }
+
+        .central-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            background: 
+                radial-gradient(circle, #ff00ff 0%, #8b00ff 50%, #000000 100%);
+            border: 5px solid #00ffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 30px #ff00ff,
+                0 0 60px rgba(255, 0, 255, 0.5),
+                inset 0 0 30px rgba(0, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            animation: centralPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes centralPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.05) rotate(2deg); }
+        }
+
+        .central-node:hover {
+            transform: translate(-50%, -50%) scale(1.15) rotate(-5deg);
+            box-shadow: 
+                0 0 40px #ff00ff,
+                0 0 80px rgba(255, 0, 255, 0.7),
+                inset 0 0 40px rgba(0, 255, 255, 0.5);
+        }
+
+        .central-node .node-content h2 {
+            font-family: 'Bungee', cursive;
+            color: #ffffff;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 
+                0 0 10px #00ffff,
+                2px 2px 0px #000000;
+            animation: textGlitch 4s ease-in-out infinite;
+        }
+
+        @keyframes textGlitch {
+            0%, 90%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .central-node .node-content p {
+            color: #00ffff;
+            font-size: 1.1rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px #000000;
+        }
+
+        .main-node {
+            position: absolute;
+            width: 320px;
+            min-height: 220px;
+            background: 
+                linear-gradient(135deg, #1a1a1a 0%, #2d0a2d 50%, #1a1a1a 100%);
+            border: 3px solid;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.7),
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            transform: skew(-2deg);
+            backdrop-filter: blur(5px);
+        }
+
+        .main-node:hover {
+            transform: translateY(-8px) skew(2deg) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.8),
+                0 0 20px currentColor,
+                inset 0 0 30px rgba(255, 0, 255, 0.2);
+            animation: nodeGlitch 0.3s ease-in-out;
+        }
+
+        @keyframes nodeGlitch {
+            0%, 100% { filter: hue-rotate(0deg); }
+            25% { filter: hue-rotate(90deg); }
+            50% { filter: hue-rotate(180deg); }
+            75% { filter: hue-rotate(270deg); }
+        }
+
+        .main-node h3 {
+            font-family: 'Bungee', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 5px currentColor,
+                2px 2px 0px #000000;
+            text-transform: uppercase;
+        }
+
+        .sub-content {
+            display: block;
+            opacity: 1;
+        }
+
+        .sub-content p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #cccccc;
+            text-shadow: 1px 1px 1px #000000;
+            position: relative;
+        }
+
+        .sub-content p:before {
+            content: "▶";
+            color: currentColor;
+            margin-right: 8px;
+            font-size: 0.8rem;
+        }
+
+        /* Posicionamiento mejorado de nodos */
+        .node-1 {
+            top: 8%;
+            left: 8%;
+            border-color: #ff0080;
+            color: #ff0080;
+        }
+
+        .node-2 {
+            top: 8%;
+            right: 8%;
+            border-color: #00ff80;
+            color: #00ff80;
+        }
+
+        .node-3 {
+            top: 35%;
+            left: 2%;
+            border-color: #ff8000;
+            color: #ff8000;
+        }
+
+        .node-4 {
+            top: 35%;
+            right: 2%;
+            border-color: #8000ff;
+            color: #8000ff;
+        }
+
+        .node-5 {
+            bottom: 8%;
+            left: 8%;
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .node-6 {
+            bottom: 8%;
+            right: 8%;
+            border-color: #ff4000;
+            color: #ff4000;
+        }
+
+        /* Líneas de conexión punk */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .connection-line {
+            stroke: #00ffff;
+            stroke-width: 3;
+            stroke-dasharray: 10,5;
+            filter: drop-shadow(0 0 5px #00ffff);
+            animation: electricFlow 2s linear infinite;
+        }
+
+        @keyframes electricFlow {
+            0% { 
+                stroke-dashoffset: 0;
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                stroke-dashoffset: -50;
+                opacity: 0.7;
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #00ffff;
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            transform: skew(-1deg);
+        }
+
+        /* Efectos de entrada */
+        @keyframes punkFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) skew(-5deg) scale(0.8);
+                filter: hue-rotate(180deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) skew(-2deg) scale(1);
+                filter: hue-rotate(0deg);
+            }
+        }
+
+        .main-node {
+            animation: punkFadeIn 0.8s ease forwards;
+        }
+
+        .node-1 { animation-delay: 0.1s; }
+        .node-2 { animation-delay: 0.2s; }
+        .node-3 { animation-delay: 0.3s; }
+        .node-4 { animation-delay: 0.4s; }
+        .node-5 { animation-delay: 0.5s; }
+        .node-6 { animation-delay: 0.6s; }
+
+        /* Responsive punk */
+        @media (max-width: 1400px) {
+            .mind-map { height: 900px; }
+            .main-node { width: 300px; min-height: 200px; }
+            .central-node { width: 220px; height: 220px; }
+        }
+
+        @media (max-width: 1200px) {
+            .mind-map { height: 800px; }
+            .main-node { width: 280px; min-height: 180px; padding: 18px; }
+            .central-node { width: 200px; height: 200px; }
+        }
+
+        @media (max-width: 768px) {
+            .mind-map { height: 700px; }
+            .main-node { 
+                width: 250px; 
+                min-height: 160px; 
+                padding: 15px;
+                font-size: 0.9rem;
+                transform: skew(-1deg);
+            }
+            .central-node { width: 180px; height: 180px; }
+            .central-node .node-content h2 { font-size: 2rem; }
+            header h1 { font-size: 2.5rem; }
+            header p { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-node { width: 220px; min-height: 140px; padding: 12px; }
+            .central-node { width: 150px; height: 150px; }
+            .central-node .node-content h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mapa Mental GUI</h1>
+            <p>∴ Diseño de Interfaces Gráficas de Usuario ∴</p>
+        </header>
+
+        <div class="mind-map">
+            <!-- Nodo central -->
+            <div class="central-node" id="central">
+                <div class="node-content">
+                    <h2>GUI</h2>
+                    <p>Interfaz Gráfica de Usuario</p>
+                </div>
+            </div>
+
+            <!-- Nodos principales -->
+            <div class="main-node node-1" id="definition">
+                <div class="node-content">
+                    <h3>¿Qué es una GUI?</h3>
+                    <div class="sub-content">
+                        <p>Interfaz entre persona y máquina</p>
+                        <p>Representa código backend de forma clara</p>
+                        <p>Historia: Xerox Alto → Apple Macintosh → Smartphones</p>
+                        <p>Iconos universales (ej: WiFi)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-node node-2" id="functioning">
+                <div class="node-content">
+                    <h3>¿Cómo funciona?</h3>
+                    <div class="sub-content">
+                        <p>Interacción: ratón, teclado, gestos</p>
+                        <p>Traductor humano-máquina</p>
+                        <p>Movimiento del puntero</p>
+                        <p>Ejecución de instrucciones</p>
+                        <p>Alternativa a línea de comandos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-node node-3" id="components">
+                <div class="node-content">
+                    <h3>Componentes</h3>
+                    <div class="sub-content">
+                        <p>Botones y menús desplegables</p>
+                        <p>Campos de entrada y navegación</p>
+                        <p>Iconos y widgets</p>
+                        <p>Ventanas y marcos</p>
+                        <p>Lienzo (canvas)</p>
+                        <p>Programación basada en eventos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-node node-4" id="requirements">
+                <div class="node-content">
+                    <h3>Requisitos</h3>
+                    <div class="sub-content">
+                        <p>Simplicidad y claridad</p>
+                        <p>Orientación a objetivos</p>
+                        <p>Consistencia visual</p>
+                        <p>Tipografía apropiada</p>
+                        <p>Actualizaciones de estado</p>
+                        <p>Experiencia de usuario intuitiva</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-node node-5" id="advantages">
+                <div class="node-content">
+                    <h3>Ventajas</h3>
+                    <div class="sub-content">
+                        <p>Fácil de usar</p>
+                        <p>Visualmente atractivo</p>
+                        <p>Accesible para principiantes</p>
+                        <p>Búsqueda visual de archivos</p>
+                        <p>Navegación rápida</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-node node-6" id="disadvantages">
+                <div class="node-content">
+                    <h3>Inconvenientes</h3>
+                    <div class="sub-content">
+                        <p>Menor flexibilidad</p>
+                        <p>Consume más memoria</p>
+                        <p>Más lenta que CLI</p>
+                        <p>Compleja de desarrollar</p>
+                        <p>Funcionalidad limitada</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Líneas de conexión -->
+            <svg class="connections" width="100%" height="100%">
+                <line class="connection-line" x1="50%" y1="50%" x2="22%" y2="22%"></line>
+                <line class="connection-line" x1="50%" y1="50%" x2="78%" y2="22%"></line>
+                <line class="connection-line" x1="50%" y1="50%" x2="18%" y2="50%"></line>
+                <line class="connection-line" x1="50%" y1="50%" x2="82%" y2="50%"></line>
+                <line class="connection-line" x1="50%" y1="50%" x2="22%" y2="78%"></line>
+                <line class="connection-line" x1="50%" y1="50%" x2="78%" y2="78%"></line>
+            </svg>
+        </div>
+
+        
+    </div>
+
+    <script>
+        // Animaciones y efectos mejorados
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePunkMindMap();
+        });
+
+        function initializePunkMindMap() {
+            const nodes = document.querySelectorAll('.main-node');
+            const centralNode = document.querySelector('.central-node');
+
+            // Efectos hover mejorados para nodos
+            nodes.forEach(node => {
+                node.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '15';
+                    createEnergyBurst(this);
+                });
+
+                node.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '5';
+                });
+
+                node.addEventListener('click', function() {
+                    createShockwave(this);
+                });
+            });
+
+            // Efecto especial para el nodo central
+            centralNode.addEventListener('click', function() {
+                createCentralExplosion();
+                pulseAllConnections();
+            });
+
+            // Efectos de ruido estático ocasional
+            setInterval(addStaticGlitch, 5000);
+        }
+
+        function createEnergyBurst(node) {
+            const burst = document.createElement('div');
+            burst.style.position = 'absolute';
+            burst.style.top = '50%';
+            burst.style.left = '50%';
+            burst.style.width = '10px';
+            burst.style.height = '10px';
+            burst.style.background = 'radial-gradient(circle, #00ffff, transparent)';
+            burst.style.borderRadius = '50%';
+            burst.style.transform = 'translate(-50%, -50%)';
+            burst.style.animation = 'energyBurst 0.6s ease-out forwards';
+            burst.style.pointerEvents = 'none';
+            burst.style.zIndex = '20';
+
+            node.appendChild(burst);
+
+            setTimeout(() => burst.remove(), 600);
+        }
+
+        function createShockwave(node) {
+            const shockwave = document.createElement('div');
+            shockwave.style.position = 'absolute';
+            shockwave.style.top = '50%';
+            shockwave.style.left = '50%';
+            shockwave.style.width = '20px';
+            shockwave.style.height = '20px';
+            shockwave.style.border = '2px solid #ff00ff';
+            shockwave.style.borderRadius = '50%';
+            shockwave.style.transform = 'translate(-50%, -50%)';
+            shockwave.style.animation = 'shockwave 0.8s ease-out forwards';
+            shockwave.style.pointerEvents = 'none';
+
+            node.appendChild(shockwave);
+
+            setTimeout(() => shockwave.remove(), 800);
+        }
+
+        function createCentralExplosion() {
+            const explosion = document.createElement('div');
+            explosion.style.position = 'absolute';
+            explosion.style.top = '50%';
+            explosion.style.left = '50%';
+            explosion.style.width = '50px';
+            explosion.style.height = '50px';
+            explosion.style.background = 'radial-gradient(circle, #ffffff, #ff00ff, transparent)';
+            explosion.style.borderRadius = '50%';
+            explosion.style.transform = 'translate(-50%, -50%)';
+            explosion.style.animation = 'centralExplosion 1s ease-out forwards';
+            explosion.style.pointerEvents = 'none';
+            explosion.style.zIndex = '25';
+
+            document.querySelector('.central-node').appendChild(explosion);
+
+            setTimeout(() => explosion.remove(), 1000);
+        }
+
+        function pulseAllConnections() {
+            const lines = document.querySelectorAll('.connection-line');
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.strokeWidth = '6';
+                    line.style.stroke = '#ffffff';
+                    line.style.filter = 'drop-shadow(0 0 10px #ffffff)';
+                    
+                    setTimeout(() => {
+                        line.style.strokeWidth = '3';
+                        line.style.stroke = '#00ffff';
+                        line.style.filter = 'drop-shadow(0 0 5px #00ffff)';
+                    }, 300);
+                }, index * 100);
+            });
+        }
+
+        function addStaticGlitch() {
+            const mindMap = document.querySelector('.mind-map');
+            mindMap.style.filter = 'hue-rotate(180deg) brightness(1.2)';
+            
+            setTimeout(() => {
+                mindMap.style.filter = 'none';
+            }, 100);
+        }
+
+        // Agregar estilos de animación dinámicamente
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes energyBurst {
+                0% {
+                    width: 10px;
+                    height: 10px;
+                    opacity: 1;
+                }
+                100% {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+
+            @keyframes shockwave {
+                0% {
+                    width: 20px;
+                    height: 20px;
+                    opacity: 1;
+                }
+                100% {
+                    width: 200px;
+                    height: 200px;
+                    opacity: 0;
+                }
+            }
+
+            @keyframes centralExplosion {
+                0% {
+                    width: 50px;
+                    height: 50px;
+                    opacity: 1;
+                    transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                    width: 400px;
+                    height: 400px;
+                    opacity: 0;
+                    transform: translate(-50%, -50%) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+
